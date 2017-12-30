@@ -4,14 +4,14 @@
 		
 			protected static $db_table = "inventory_adjustments";
 
-			protected static $db_table_fields = array('id', 'item', 'date', 'adjustment_type', 'current_quantity', 'purchased_quantity', 'purchased_cost', 'distribution_cost', 'supplier', 'serial_number', 'manufactured_date', 'expiry_date');
+			protected static $db_table_fields = array('id', 'item', 'date', 'adjustment_type', 'current_quantity', 'quantity', 'purchased_cost', 'distribution_cost', 'supplier', 'serial_number', 'manufactured_date', 'expiry_date');
 
 		public $id;
 		public $item;
 		public $date;
 		public $adjustment_type;
 		public $current_quantity;
-		public $purchased_quantity;
+		public $quantity;
 		public $purchased_cost;
 		public $distribution_cost;
 		public $supplier;
@@ -19,9 +19,9 @@
 		public $manufactured_date;
 		public $expiry_date;
 		
-		public static function find_by_item($item) {
+		public static function find_by_item($item_id) {
 
-			$the_result_array = static::find_by_query("SELECT * FROM " . static::$db_table . " WHERE item=$item");
+			$the_result_array = static::find_by_query("SELECT * FROM " . static::$db_table . " WHERE item=$item_id");
 
 			return !empty($the_result_array) ? array_shift($the_result_array) : false; 
 

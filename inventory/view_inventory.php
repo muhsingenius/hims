@@ -5,14 +5,62 @@
 
 if(isset($_GET['id'])){
 
-	$item = Inventory::find_by_id($_GET['id']);
-
-	
+	$item = Inventory::find_by_id($_GET['id']);	
 
 }
 
-
 ?>
+
+<?php
+
+  if(isset($_GET['id'])){
+
+  	$item_id = $_GET['id'];
+  	$adjustment_item = InventoryAdjustment::find_by_item($item_id);
+
+
+  }
+
+ ?>
+
+ <?php
+
+ 	if(isset($_POST['update'])){
+
+ 		$update_item = Inventory::find_by_id($_GET['id']);
+
+ 		if($update_item) {
+ 				$update_item->item_name = $_POST['item_name'];
+ 				$update_item->description = $_POST['description'];
+ 				$update_item->type        = $_POST['type'];
+ 				$update_item->category    = $_POST['category'];
+ 				$update_item->strength    = $_POST['strength'];
+ 				$update_item->reorder_level = $_POST['reorder_level'];
+ 				$update_item->distribution_cost = $_POST['distribution_cost'];
+
+
+ 				$update_item->save();
+
+
+ 				//////  update this item at the inventory adjustment level
+
+ 				$adjustmented_item = InventoryAdjustment::find_by_item($item_id);
+
+          
+          $adjustmented_item->distribution_cost = $_POST['distribution_cost'];
+
+         
+          $adjustmented_item->save();
+
+ 				redirect("view_inventory.php?id=$update_item->id");
+
+
+
+
+ 		}
+ 	}
+
+ ?>
 
 
 
@@ -196,7 +244,7 @@ if(isset($_GET['id'])){
 			                        <a href="../procedures.php"><i class="fa fa-fw fa-file-text"></i> Procedures</a>
 			                    </li>
 			                    <li>
-			                        <a href="inventory.php"><i class="fa fa-fw fa-list"></i> Inventory</a>
+			                        <a href="../inventory.php"><i class="fa fa-fw fa-list"></i> Inventory</a>
 			                    </li>
 			                    <li>
 			                        <a href="#"><i class="fa fa-fw fa-bar-chart"></i> Reports</a>
@@ -247,7 +295,7 @@ if(isset($_GET['id'])){
 			                 ?>
 			                    
 			              
-			                </ul>
+			                </ul> <!-- side nav elements here -->
 			            </div>
 
    	<div class="col-sm-9">
@@ -271,7 +319,7 @@ if(isset($_GET['id'])){
 			           Recieved Items
 			          </a>
 
-			        </ul>
+			        </ul><!-- header title here -->
         </h1>
 
         
@@ -323,7 +371,7 @@ if(isset($_GET['id'])){
 				    </div>
 				  	<div class="form-group row">
 				      <div class="col-sm-4 pull-right">
-				        <button class="btn btn-danger" type="submit" name="submit">Update</button>
+				        <button class="btn btn-danger" type="submit" name="update">Update</button>
 				      </div>
 				  		
 				  	</div>
@@ -334,48 +382,65 @@ if(isset($_GET['id'])){
 			 	<h1 class="page-header">
 			 			Adjustments
 			 			<ul style="margin-top: 0px; margin-left: 0px; margin-bottom: 20px" class="pull-right">
-			          <a href="inventory.php?add_inventory" style="margin-left: 50px" role="button" class="btn btn-success"><i class="fa fa-plus"></i>
-			           Purchase
+			          <a href="add_adjustments.php?id=<?php  echo $adjustment_item->id; ?> & item_id=<?php echo $item_id; ?>" style="margin-left: 50px" role="button" class="btn btn-success"><i class="fa fa-plus"></i>
+			           Adjustments
 			          </a>
-			          <a href="#" style="margin-left: 50px" role="button" class="btn btn-success"><i class="fa fa-plus"></i>
+			          <!-- <a href="#" style="margin-left: 50px" role="button" class="btn btn-success"><i class="fa fa-plus"></i>
 			           Requests
 			          </a>
 			          <a href="#" style="margin-left: 50px" role="button" class="btn btn-success"><i class="fa fa-plus"></i>
 			           Return
-			          </a>
+			          </a> -->
 
 			        </ul>
 			 	</h1>
 			 	<table class="table table-striped table-bordered table-hover">
                           <thead>
+                         
                           <tr>
-                          	<th scope="col">Date</th> 
+                          	<th scope="col">Date</th>
+                          	<th scope="col">Type</th> 
+                          	<th scope="col">Quantity</th>
                             <th scope="col">Purchase Cost</th>
-                            <th scope="col">Distribution Cost</th>
-                            <th scope="col">Original Quantity</th>      
-                            <th scope="col">Current Quantity</th>
+                            <th scope="col">Distribution Cost</th>   
                             <th scope="col">Supplier</th>
                             <th scope="col">Serial Number</th>
                             <th scope="col">Expiry Date</th>
                           </tr>
                         </thead>
                         <tbody>
-                         
+
+														<?php
+
+															$adjustment_items = InventoryAdjustment::find_all();
+
+															foreach ($adjustment_items as $adjustment_item): 
+
+																if($adjustment_item->item===$item_id) {
+																
+														?>                         
                            <tr>
      
-                                <td><?php echo $item->date; ?></td>
-                                <td><?php echo $item->purchase_cost ?></td>
-                                <td><?php echo $item->distribution_cost; ?></td>
-                                <td><?php echo $item->original_quantity . "s"; ?></td>
-                                <td><?php echo $item->current_quantity . "s"; ?></td>
-                                <td><?php echo $item->supplier ;?></td>
-                                <td><?php echo $item->serial_number; ?></td>
-                                <td><?php echo $item->expiry_date ;?></td> 
+                                <td><?php echo $adjustment_item->date; ?></td>
+                                <td><?php echo $adjustment_item->adjustment_type; ?></td>
+                                <td><?php echo $adjustment_item->quantity . " " .$item->dispensable_unit . "s"; ?></td>
+                                <td><?php echo $adjustment_item->purchased_cost ?></td>
+                                <td><?php echo $adjustment_item->distribution_cost; ?></td>
+                                <td><?php echo $adjustment_item->supplier ;?></td>
+                                <td><?php echo $adjustment_item->serial_number; ?></td>
+                                <td><?php echo $adjustment_item->expiry_date ;?></td> 
                                  
                             </tr> 
+                          <?php } endforeach  ?>
                             
                         </tbody>
                         </table>
+
+                        <div class="pull-right">
+                        	<h1 class="page-header">
+                        		Available Quantity: <?php echo $item->current_quantity; ?>
+                        	</h1>
+                        </div>
                         
 							 </div>
 

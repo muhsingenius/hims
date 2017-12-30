@@ -24,19 +24,9 @@
                           <a href='inventory.php' class='btn btn-danger'>
                           <span class='glyphicon glyphicon-arrow-left'> Back </span>
                           </a>" ; } ?>
-                    </h1>
 
 
-                  <?php //include("includes/admin_content.php")
-
-                     if(isset($_GET['add_inventory'])){
-
-                       include("inventory/add_inventory.php");
-                     } else {
-
-                  ?>
-
-                        <ul style="margin-top: 50px; margin-left: 0px; margin-bottom: 20px">
+                          <ul style="margin-top: 0px; margin-left: 0px; margin-bottom: 20px" class="pull-right">
                           <a href="inventory.php?add_inventory" style="margin-left: 50px" role="button" class="btn btn-success"><i class="fa fa-plus"></i>
                            Add New Item
                           </a>
@@ -48,6 +38,20 @@
                           </a>
 
                         </ul>
+                    </h1>
+
+
+                  <?php //include("includes/admin_content.php")
+
+                     if(isset($_GET['add_inventory'])){
+
+                       include("inventory/add_inventory.php");
+
+                     } else {
+
+                  ?>
+
+                        
 
                         <table class="table table-striped table-bordered table-hover">
                           <thead>
