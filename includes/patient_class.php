@@ -25,6 +25,16 @@
 		public $contact_person;
 		public $relationship;
 		public $contact_person_phone;
+
+
+
+		public static function find_by_patient_no($patient_no) {
+
+			$the_result_array = static::find_by_query("SELECT * FROM " . static::$db_table . " WHERE patient_no=$patient_no LIMIT 1");
+
+			return !empty($the_result_array) ? array_shift($the_result_array) : false; 
+
+		}//end of find by patient number
 		
 	}/// end of patient class
 

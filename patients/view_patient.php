@@ -1,5 +1,14 @@
 <?php include("../includes/header.php"); ?>
 
+
+<?php
+
+	if(isset($_GET['id'])){
+			$patient = Patient::find_by_id($_GET['id']);
+
+	}
+?>
+
 <?php
 
 	$activate_bio = "active";
@@ -25,20 +34,15 @@
 	
 		$appointment->create();
 
-		redirect("patients/view_patient.php?id=echo $a_patient->id & patient_no= echo $a_patient->patient_no ");
 		$activate_bio = "";
 		$activate_appointments = "active";
+		redirect("view_patient.php?id= $patient->id & patient_no= $patient->patient_no ");
+		
 
 	}
 ?>
 
-<?php
 
-	if(isset($_GET['id'])){
-			$patient = Patient::find_by_id($_GET['id']);
-
-	}
-?>
 
 <!DOCTYPE html>
 <html>
@@ -158,8 +162,8 @@
 										    	<th scope="col">ID</th>
 										      <th scope="col">Patient Number</th>
 										      <th scope="col">Appointment Date</th>   
-										      <th scope="col">Status</th>  
-										      <th scope="col">Action</th>
+										      <th scope="col">Vitals</th>  
+										      <!-- <th scope="col">Action</th> -->
 										    </tr>
 										  </thead>
 										  <tbody>
@@ -180,12 +184,16 @@
 										     		<td>{$appointment->id}</td>
 										     		<td>{$appointment->patient_no}</td>
 											      <td>{$appointment->appointment_date}</td>
-											      <td>{$appointment->status}</td>
 											      <td>
+												      <p> <strong>Blood Pressure: </strong> {$appointment->bp}</p>
+												      <p> <strong>Weight: </strong> {$appointment->weight}</p>
+												      <p> <strong>Temperature: </strong> {$appointment->temperature}</p>
+											      </td>
+											      <!--<td>
 											          <a href='' role='button' class='btn btn-info'>
 											            Take Vitals
 											          </a>
-											      </td>";
+											      </td>-->";
 										     	}  ?>      
 										    </tr>   
 										  <?php  endforeach; } }?>
@@ -195,34 +203,6 @@
 			          </div>
 			      </div>
 
-			      <!-- <div class="well">
-
-			 
-			  	<h2>Patient Vitals</h2>
-			  	<form action="" method="post">
-			  		<div class="row">
-			  			<div class="form-group col-sm-6">
-								<label>Blood Pressure</label>
-								<input type="text" name="bp" class="form-control">
-							</div>
-							<div class="form-group col-sm-6">
-								<label>Weight</label>
-								<input type="text" name="weight" class="form-control">
-							</div>
-			  		</div>
-			  		<div class="row">
-			  			<div class="form-group col-sm-6">
-								<label>Temperature</label>
-								<input type="text" name="temperature" class="form-control">
-							</div>
-			  		</div>
-
-							<div class="form-group">
-								<button class="btn btn-info" type="submit" name="update">Update</button>
-							</div>
-									  		
-			  	</form>
-			  </div> -->
 			    </div>
 			    <div class="tab-pane" id="tab3">
 			      <div class="panel panel-default">
@@ -239,7 +219,7 @@
 					        <div class="panel-heading row">
 					          <h4 class="panel-title col-sm-4">View Appointments</h4>
 					          <button class="btn btn-danger col-sm-4" onclick="formFunction()">
-      								Schedule Appoitment
+      								Schedule Appointment
       							</button>
 					        </div>
 					          <div class="panel-body">
@@ -299,7 +279,15 @@
 								  		<div class="row">
 								  			<div class="form-group col-sm-6">
 													<label>Reason</label>
-													<input type="text" name="reason" class="form-control">
+													<select class="form-control" name="reason">
+													<option>---Select---</option>
+														<?php
+															$procedures = Procedure::find_all();
+															foreach ($procedures as $procedure) {
+																echo "<option>{$procedure->procedure_name}</option>";
+															}
+														?>
+													</select>
 												</div>
 								  		</div>
 
