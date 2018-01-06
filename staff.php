@@ -65,6 +65,11 @@
 
             }
 
+            if(isset($_GET['view_staff'])){
+              include("staff/view_staff.php");
+
+            }
+
             ?>
 
       </div>

@@ -30,7 +30,7 @@
       <td><?php  echo $a_staff->will_sign_in; ?></td>
 
         <td> 
-          <a href="" role="button" class="btn btn-success"><span class="glyphicon glyphicon-folder-open"></span> </a>
+          <a href="view_staff.php?id=<?php echo $a_staff->id; ?>" role="button" class="btn btn-success"><span class="glyphicon glyphicon-folder-open"></span> </a>
           <a href="" role="button" class="btn btn-info"><span class="glyphicon glyphicon-edit"></span></a>
           <a href="" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></a>
         </td>

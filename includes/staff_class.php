@@ -5,7 +5,7 @@
 
 		protected static $db_table = "staff";
 
-		protected static $db_table_fields = array('full_name', 'sex', 'department', 'will_sign_in', 'username', 'password', 'role');
+		protected static $db_table_fields = array('full_name', 'sex', 'department', 'will_sign_in', 'username', 'password', 'role', 'phone_no', 'house_no', 'area', 'location', 'emergency_contact_number', 'emergency_contact_name', 'relationship');
 		public $id;
 		public $full_name;
 		public $sex;
@@ -14,6 +14,13 @@
 		public $username;
 		public $password;
 		public $role;
+		public $phone_no;
+		public $house_no;
+		public $area;
+		public $location;
+		public $emergency_contact_number;
+		public $emergency_contact_name;
+		public $relationship;
 
 		
 

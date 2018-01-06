@@ -50,7 +50,7 @@ $password = "";
  ?>
 
 
-<div class="col-md-4 col-md-offset-3">
+<div class="col-md-4 col-md-offset-4">
 
 <h4 class="bg-danger"><?php echo $the_message; ?></h4>
 	

@@ -63,6 +63,33 @@
 
 				}
 ?>
+
+<?php
+				if(isset($_POST['save_test_request'])){
+					$date = $_POST['date'];	
+					$time = $_POST['time'];		
+					$patient_no = $patient->patient_no;	
+					$appointment_id = $appointment->id;
+					$doctor = $staff->full_name;
+					$test = $_POST['test'];
+					$status = "Pending";
+
+					$request = new Test_request();
+
+					$request->date = $date;
+					$request->request_time = $time;
+					$request->patient = $patient_no;
+					$request->appointment = $appointment_id;
+					$request->doctor = $doctor;
+					$request->test        = $test;
+					$request->status      = $status;
+
+					$request->save();
+					redirect("appointments.php?id={$appointment_id}&patient_no={$patient_no}");
+
+				}
+
+?>
      
       
 
@@ -107,7 +134,7 @@
 	              	<p><span style="font-weight: bold"> Temperature:  </span> <?php echo $appointment->temperature; ?> </p>
 	              	<p><span style="font-weight: bold"> Weight:  </span> <?php echo $appointment->weight; ?> </p>
               	</div>
-              	<div class="col-sm-9">
+              	<div class="col-sm-8" style="border-right: 1px solid green;">
               	<h3 style="border-bottom: 1px dotted red; margin-top: 0px ">Patient Investigation</h3>
               	<?php  
               		$the_investigation = Investigation::find_by_patient_no($patient->patient_no);
@@ -122,8 +149,29 @@
               		<p><strong>Diagnose by: </strong><?php echo $the_investigation->doctor;  ?></p>
               	<?php endif ?>
               	</div>
+              	
               </div>
             <?php endif ; } ?>
+
+            <div class="row well">
+            	<div class="col-sm-6" style="border-right: 1px solid green;">
+              		<h3 style="border-bottom: 1px dotted red; margin-top: 0px ">Patient Lab Tests</h3>
+              		<table class="table table-striped table-bordered table-hover">
+              			<thead>
+              				 <tr>
+                          
+                            <th scope="col">Test Name</th>
+                            <th scope="col">Results</th>
+                            <th scope="col">View</th>
+                          </tr>
+              			</thead>
+              		</table>
+              </div>
+              <div class="col-sm-6" style="border-right: 1px solid green;">
+              		<h3 style="border-bottom: 1px dotted red; margin-top: 0px ">Patient Prescriptions</h3>
+              		
+              </div>
+            </div>
 
               <ul style="margin-top: 50px; margin-left: 20px; margin-bottom: 20px">
                 <button " style="margin-left: 50px" onclick="vitalsFunction()" class="btn btn-success">
@@ -132,8 +180,8 @@
                 <button style="margin-left: 50px" onclick="diagnosisFunction()" class="btn btn-success">
                 	<i class="fa fa-table"> </i> Diagnosis
                 </button>
-                <button class="btn btn-success" style="margin-left: 50px" onclick="diagnosis">
-                	<i class="fa fa-plus"></i>Request Lab
+                <button class="btn btn-success" style="margin-left: 50px" onclick="testRequestFunction()" >
+                	<i class="fa fa-plus"></i>Test Request
                 </button>
                 <button class="btn btn-success" style="margin-left: 50px">
                 	<i class="fa fa-table"></i> Procedures
@@ -180,20 +228,13 @@
 					  	</div>
 					  	
 						</form>
-					</div>
+					</div> <!-- end of vitals form -->
 
 							<!-- diagnose form -->
 				  <div  style="width: 90%; display: none;" id="diagnose_form">
 
 					  <div class="btn-danger" style=" padding: 1px; margin: 5px 0 20px 0; height: 70px; width:100%; border-radius: 2px">
 					    <h2><span class="glyphicon glyphicon-plus-sign" aria-hidden="true" style="margin-right: 5px"></span>Patient Diagnosis
-<?php
-/*$staff = Staff::find_by_id($_SESSION['user_id']);
-echo $staff->full_name;*/
-				/*$patient = Patient::find_by_patient_no($_GET['patient_no']);
-				echo $patient->patient_no;*/
-
-?>
 					    </h2>
 					  </div>
 						<form class="form" action="" method="post" >
@@ -243,7 +284,49 @@ echo $staff->full_name;*/
 					  	</div>
 					  	
 						</form>
-				</div>
+					</div><!-- end diagnosis form -->
+
+				<!-- test request form -->
+				  <div  style="width: 90%; display: none;" id="test_request_form">
+
+					  <div class="btn-danger" style=" padding: 1px; margin: 5px 0 20px 0; height: 70px; width:100%; border-radius: 2px">
+					    <h2><span class="glyphicon glyphicon-plus-sign" aria-hidden="true" style="margin-right: 5px"></span>Test Request
+					    </h2>
+					  </div>
+						<form class="form" action="" method="post" >
+
+					    <div class="form-group row">
+					      <div class="col-sm-4">
+					        <label class="col-form-label">Date</label>
+					        <input type="text" class="form-control" name="date" value="<?php echo date('d-m-Y'); ?>">
+					      </div>
+					      <div class="col-sm-4">
+					        <label class="col-form-label">Time</label>
+					        <input type="text" class="form-control" name="time" value="<?php date_default_timezone_set("UTC"); echo Date("H:i:s");  ?>">
+					      </div>
+					      <div class="col-sm-4">
+
+					        <label class="col-form-label">Test</label>
+					        <select type="test" class="form-control" name="test">
+					        	<option>--Select--</option>
+					        	<?php 
+					      		$get_tests = Lat_tests::find_all();
+					      				foreach ($get_tests as $a_test) {
+					      					echo "<option value='$a_test->id'>{$a_test->test_name}</option>";
+					      				}
+					      		 ?>
+
+					        </select>
+					      </div>
+					    </div>	
+					  	<div class="form-group row">
+					      <div class="col-sm-4 col-sm-offset-4">
+					        <button class="btn btn-danger" type="submit" name="save_test_request">Submit Request</button>
+					      </div>	
+					  	</div>
+					  	
+						</form>
+				</div><!-- end test_request form -->
             
 
 
@@ -274,6 +357,16 @@ echo $staff->full_name;*/
 
     				function diagnosisFunction() {
     					var x = document.getElementById("diagnose_form");
+
+    					if(x.style.display === "none") {
+    						x.style.display = "block";
+
+    					}else{
+    						x.style.display = "none";
+    					}
+    				}
+    				function testRequestFunction() {
+    					var x = document.getElementById("test_request_form");
 
     					if(x.style.display === "none") {
     						x.style.display = "block";

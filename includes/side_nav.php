@@ -5,7 +5,7 @@
 
                 <!-- <div class="jumbotron" style="background-color: #b71c1c; padding: 25px">dfd</div> -->
 
-                <?php  if ($session->role == "admin") {echo '
+                <?php  if ($session->role == "System Admin") {echo '
 
 
                     <li>
@@ -21,7 +21,7 @@
                         <a href="#"><i class="fa fa-fw fa-briefcase"></i> Pharmacy</a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-fw fa-filter"></i> Laboratory</a>
+                        <a href="laboratory.php"><i class="fa fa-fw fa-filter"></i> Laboratory</a>
                     </li>
                     <li>
                         <a href="procedures.php"><i class="fa fa-fw fa-file-text"></i> Procedures</a>
@@ -46,7 +46,7 @@
                             <a href="patients.php"><i class="fa fa-fw fa-user"></i> Patients</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-edit"></i> Laboratory</a>
+                            <a href="laboratory.php"><i class="fa fa-fw fa-edit"></i> Laboratory</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-fw fa-edit"></i> Reports</a>
@@ -64,7 +64,7 @@
                             <a href="patients.php"><i class="fa fa-fw fa-user"></i> Patients</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-edit"></i> Laboratory</a>
+                            <a href="laboratory.php"><i class="fa fa-fw fa-edit"></i> Laboratory</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-fw fa-edit"></i> Reports</a>

@@ -39,7 +39,7 @@
 		<div class="form-group row">
   		<label for="inputEmail3" class="col-sm-2 col-form-label">Full Name</label>
   		<div class="col-sm-10">
-   	 		<input type="text" class="form-control" id="inputEmail3" name="full_name" placeholder="Example Name">
+   	 		<input type="text" class="form-control" id="inputEmail3" name="full_name">
  			</div>
   	</div>
   	<div class="form-group row">
@@ -84,24 +84,17 @@
   	</div>
 
   	<div id="login_fields" style="display: none;" >
-  		
-
+  
   		<div class="form-group row" >
-  		<label for="inputEmail3" class="col-sm-2 col-form-label">User Name</label>
-  		<div class="col-sm-10">
-   	 		<input type="text" class="form-control" id="inputEmail3" placeholder="User Name" name="username" >
- 			</div>
-  	</div>
+    		<label for="inputEmail3" class="col-sm-2 col-form-label">User Name</label>
+    		<div class="col-sm-10">
+     	 		<input type="text" class="form-control" id="inputEmail3"  name="username" >
+   			</div>
+  	 </div>
   	<div class="form-group row">
   		<label for="inputEmail3" class="col-sm-2 col-form-label">Password</label>
   		<div class="col-sm-10">
-   	 		<input type="password" class="form-control" id="inputEmail3" placeholder="Password" name="password">
- 			</div>
-  	</div>
-  	<div class="form-group row">
-  		<label for="inputEmail3" class="col-sm-2 col-form-label">Repeat Password</label>
-  		<div class="col-sm-10">
-   	 		<input type="password" class="form-control" id="inputEmail3" placeholder="Repeat Password" name="repeat_password">
+   	 		<input type="text" class="form-control" id="inputEmail3" name="password" id="password" value="">
  			</div>
   	</div>
   	<div class="form-group row">
@@ -116,13 +109,10 @@
           <?php
             foreach ($roles as $role) {
               echo "
-
                 <option>{$role->role}</option>
               ";
             }
-          ?>
-        
-      
+          ?>      
     		</select>
  			</div>
   	</div>

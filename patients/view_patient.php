@@ -99,7 +99,7 @@
 			  </h1>
 
 			  <ul class="nav nav-tabs">
-			    <li class="active"><a href="#tab1" data-toggle="tab">Information</a></li>  
+			    <li class="<?php  echo $activate_bio; ?>"><a href="#tab1" data-toggle="tab">Information</a></li>  
 			    <li><a href="#tab2" data-toggle="tab">Vitals</a></li>
 			    <li><a href="#tab3" data-toggle="tab">Insuarance</a></li>
 			    <li><a href="#tab4" data-toggle="tab">Appointments</a></li>

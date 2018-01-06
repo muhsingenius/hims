@@ -1,2 +1,16 @@
 /includes/init.php
 /includes/config.php
+/inventory/css
+/inventory/font-awesome
+/inventory/fonts
+/inventory/js
+
+/lab/css
+/lab/font-awesome
+/lab/fonts
+/lab/js
+
+/patients/css
+/patients/font-awesome
+/patients/fonts
+/patients/js
